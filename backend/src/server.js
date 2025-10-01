@@ -28,7 +28,16 @@ if (process.env.NODE_ENV == 'production') {
   });
 }
 
-app.listen(PORT, () => {
-  console.log(colors.yellow(`Server is running on port ${PORT}`));
-  connectDB();
-});
+const startServer = async () => {
+  try {
+    await connectDB();
+    app.listen(PORT, () => {
+      console.log(colors.yellow(`Server is running on port ${PORT}`));
+    });
+  } catch (error) {
+    console.error(`Database connection Failed: ${error}`);
+    process.exit(1);
+  }
+};
+
+startServer();
