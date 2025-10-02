@@ -1,4 +1,33 @@
+// Escape HTML special characters to prevent XSS
+function escapeHtml(text) {
+  if (!text) return '';
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 export function createWelcomeEmailTemplate(name, clientURL) {
+  // Validate inputs
+  if (!name || typeof name !== 'string') {
+    throw new Error('name must be a non-empty string');
+  }
+  if (!clientURL || typeof clientURL !== 'string') {
+    throw new Error('clientURL must be a non-empty string');
+  }
+
+  // Validate URL format and protocol
+  try {
+    const url = new URL(clientURL);
+    if (!['http:', 'https:'].includes(url.protocol)) {
+      throw new Error('clientURL must use http or https protocol');
+    }
+  } catch (error) {
+    throw new Error(`Invalid clientURL: ${error.message}`);
+  }
+
   return `
     <!DOCTYPE html>
   <html lang="en">
@@ -17,7 +46,7 @@ export function createWelcomeEmailTemplate(name, clientURL) {
     
     <!-- Main -->
     <div style="background-color: #241a3a; padding: 35px; border-radius: 0 0 16px 16px; box-shadow: 0 6px 20px rgba(0,0,0,0.4);">
-      <p style="font-size: 18px; color: #e0d7f5;"><strong>Hello ${name},</strong></p>
+      <p style="font-size: 18px; color: #e0d7f5;"><strong>Hello ${escapeHtml(name)},</strong></p>
       <p style="color: #cbbde7;">Welcome to BroToCall, we’re so excited you’ve joined our community!</p>
       
       <div style="background: #2e214d; padding: 25px; border-radius: 12px; margin: 25px 0; border-left: 4px solid #6d4ab7;">

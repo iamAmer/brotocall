@@ -2,7 +2,11 @@ import { resendClient, sender } from '../config/resend.js';
 import { createWelcomeEmailTemplate } from '../emails/emailTemplates.js';
 import colors from 'colors';
 
-export const sendWelcomeEmails = async (email, name, clientURL) => {
+export const sendWelcomeEmail = async (email, name, clientURL) => {
+  if (!email || typeof email !== 'string' || !email.includes('@')) {
+    throw new Error('Invalid email address provided');
+  }
+
   const { data, error } = await resendClient.emails.send({
     from: `${sender.name} <${sender.email}>`,
     to: email,
@@ -15,5 +19,5 @@ export const sendWelcomeEmails = async (email, name, clientURL) => {
     throw new Error('Failed to send welcome email!');
   }
 
-  console.log(`Welcome email sent successfully!`)
+  console.log(`Welcome email sent successfully!`);
 };

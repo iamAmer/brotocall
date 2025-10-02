@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.js';
 import { generateToken } from '../config/utils.js';
-import { sendWelcomeEmails } from '../emails/emailsHandler.js';
+import { sendWelcomeEmail } from '../emails/emailsHandler.js';
 import { ENV } from '../config/env.js'
 
 export const signup = async (req, res) => {
@@ -62,7 +62,7 @@ export const signup = async (req, res) => {
 
       // TODO: send welcome email to user
       try {
-        await sendWelcomeEmails(
+        await sendWelcomeEmail(
           newUser.email,
           newUser.userName,
           ENV.clientURL
