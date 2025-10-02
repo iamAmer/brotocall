@@ -1,11 +1,14 @@
 import bcrypt from 'bcryptjs';
 import User from '../models/user.js';
 import { generateToken } from '../config/utils.js';
+import { sendWelcomeEmails } from '../emails/emailsHandler.js';
+import { ENV } from '../config/env.js'
 
 export const signup = async (req, res) => {
   const { userName, email, password } = req.body;
   const cleanedUserName = typeof userName === 'string' ? userName.trim() : '';
-  const cleanedEmail = typeof email === 'string' ? email.trim().toLocaleLowerCase() : '';
+  const cleanedEmail =
+    typeof email === 'string' ? email.trim().toLocaleLowerCase() : '';
   const pass = typeof password === 'string' ? password : '';
 
   try {
@@ -58,6 +61,15 @@ export const signup = async (req, res) => {
       });
 
       // TODO: send welcome email to user
+      try {
+        await sendWelcomeEmails(
+          newUser.email,
+          newUser.userName,
+          ENV.clientURL
+        );
+      } catch (error) {
+        console.error('Failed to send welcome email!', error);
+      }
     } else {
       res.status(400).json({ message: 'Invalid user data' });
     }
