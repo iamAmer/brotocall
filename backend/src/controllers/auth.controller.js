@@ -4,42 +4,45 @@ import { generateToken } from '../config/utils.js';
 
 export const signup = async (req, res) => {
   const { userName, email, password } = req.body;
+  const cleanedUserName = typeof userName === 'string' ? userName.trim() : '';
+  const cleanedEmail = typeof email === 'string' ? email.trim().toLocaleLowerCase() : '';
+  const pass = typeof password === 'string' ? password : '';
 
   try {
-    if (!userName || !email || !password) {
+    if (!cleanedUserName || !cleanedEmail || !pass) {
       return res.status(400).json({ message: 'All fields are required' });
     }
-    if (password.length < 6) {
+    if (pass.length < 6) {
       return res
         .status(400)
         .json({ message: 'Password must be at least 6 characters' });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
+    if (!emailRegex.test(cleanedEmail)) {
       return res.status(400).json({ message: 'Invalid email format' });
     }
 
     const user = await User.findOne({
-      $or: [{ email }, { userName }],
+      $or: [{ email: cleanedEmail }, { userName: cleanedUserName }],
     });
 
     if (user) {
-      if (user.email === email) {
+      if (user.email === cleanedEmail) {
         return res.status(400).json({ message: 'Email already exists' });
       }
-      if (user.userName === userName) {
+      if (user.userName === cleanedUserName) {
         return res.status(400).json({ message: 'Username already exists' });
       }
     }
 
     // password hashing
     const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
+    const hashedPassword = await bcrypt.hash(pass, salt);
 
     const newUser = new User({
-      email,
-      userName,
+      email: cleanedEmail,
+      userName: cleanedUserName,
       password: hashedPassword,
     });
 
