@@ -4,12 +4,12 @@ import { generateToken } from '../config/utils.js';
 
 export const signup = async (req, res) => {
   const { userName, email, password } = req.body;
-  const cleanerUserName = typeof userName === 'string' ? userName.trim() : '';
-  const cleanerEmail = typeof email === 'string' ? email.trim().toLocaleLowerCase() : '';
+  const cleanedUserName = typeof userName === 'string' ? userName.trim() : '';
+  const cleanedEmail = typeof email === 'string' ? email.trim().toLocaleLowerCase() : '';
   const pass = typeof password === 'string' ? password : '';
 
   try {
-    if (!cleanerUserName || !cleanerEmail || !pass) {
+    if (!cleanedUserName || !cleanedEmail || !pass) {
       return res.status(400).json({ message: 'All fields are required' });
     }
     if (pass.length < 6) {
@@ -19,19 +19,19 @@ export const signup = async (req, res) => {
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(cleanerEmail)) {
+    if (!emailRegex.test(cleanedEmail)) {
       return res.status(400).json({ message: 'Invalid email format' });
     }
 
     const user = await User.findOne({
-      $or: [{ cleanerEmail }, { cleanerUserName }],
+      $or: [{ email: cleanedEmail }, { userName: cleanedUserName }],
     });
 
     if (user) {
-      if (user.email === cleanerEmail) {
+      if (user.email === cleanedEmail) {
         return res.status(400).json({ message: 'Email already exists' });
       }
-      if (user.userName === cleanerUserName) {
+      if (user.userName === cleanedUserName) {
         return res.status(400).json({ message: 'Username already exists' });
       }
     }
@@ -41,8 +41,8 @@ export const signup = async (req, res) => {
     const hashedPassword = await bcrypt.hash(pass, salt);
 
     const newUser = new User({
-      email: cleanerEmail,
-      userName: cleanerUserName,
+      email: cleanedEmail,
+      userName: cleanedUserName,
       password: hashedPassword,
     });
 
