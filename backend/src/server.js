@@ -1,18 +1,20 @@
 import express from 'express';
 import colors from 'colors';
 import path from 'path';
+import cookieParser from 'cookie-parser'
 import { ENV } from './config/env.js';
 
 import authRoutes from './routes/auth.route.js';
 import messageRouters from './routes/message.route.js';
 import { connectDB } from './config/db.js';
 
-const PORT = ENV.PORT|| 3000;
+const PORT = ENV.PORT || 3000;
 
 const app = express();
 const __dirname = path.resolve();
 
 app.use(express.json());
+app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
 app.use('/api/message', messageRouters);
