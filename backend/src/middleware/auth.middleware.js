@@ -4,7 +4,7 @@ import { ENV } from '../config/env.js';
 
 export const protectRoute = async (req, res, next) => {
   try {
-    const token = req.cookies.iwt;
+    const token = req.cookies.jwt;
 
     if (!token) {
       return res
