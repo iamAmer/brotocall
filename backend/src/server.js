@@ -1,7 +1,7 @@
 import express from 'express';
 import colors from 'colors';
 import path from 'path';
-import cookieParser from 'cookie-parser'
+import cookieParser from 'cookie-parser';
 import { ENV } from './config/env.js';
 
 import authRoutes from './routes/auth.route.js';
