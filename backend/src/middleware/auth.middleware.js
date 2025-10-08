@@ -23,7 +23,9 @@ export const protectRoute = async (req, res, next) => {
     }
 
     req.user = user;
-    next();
+    return res.status(503).json({ 
+      message: 'Security service temporarily unavailable. Please try again later.' 
+   });
   } catch (error) {
     console.log(`Error in protectRoute middleware ${error}`);
     res.status(500).json({ message: 'Internal server error' });
