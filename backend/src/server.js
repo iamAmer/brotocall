@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/message', messageRouters);
+app.use('/api/messages', messageRouters);
 
 // make ready for deployment
 if (ENV.NODE_ENV == 'production') {
