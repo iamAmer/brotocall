@@ -3,6 +3,7 @@ import colors from 'colors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import { ENV } from './config/env.js';
+import cors from 'cors';
 
 import authRoutes from './routes/auth.route.js';
 import messageRouters from './routes/message.route.js';
@@ -14,6 +15,7 @@ const app = express();
 const __dirname = path.resolve();
 
 app.use(express.json());
+app.use(cors({origin: ENV.clientURL, credentials: true}));
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
