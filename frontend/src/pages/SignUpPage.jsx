@@ -39,6 +39,7 @@ function SignUpPage() {
               </label>
               <input
                 type="text"
+                required
                 value={formData.fullName}
                 onChange={(e) =>
                   setFormData({ ...formData, fullName: e.target.value })
@@ -53,6 +54,7 @@ function SignUpPage() {
               <label className="block text-sm text-zinc-400 mb-2">Email</label>
               <input
                 type="email"
+                required
                 value={formData.email}
                 onChange={(e) =>
                   setFormData({ ...formData, email: e.target.value })
@@ -69,6 +71,7 @@ function SignUpPage() {
               </label>
               <input
                 type="password"
+                required
                 value={formData.password}
                 onChange={(e) =>
                   setFormData({ ...formData, password: e.target.value })

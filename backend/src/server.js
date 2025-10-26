@@ -8,7 +8,6 @@ import cors from 'cors';
 import authRoutes from './routes/auth.route.js';
 import messageRouters from './routes/message.route.js';
 import { connectDB } from './config/db.js';
-import { env } from 'process';
 
 const PORT = ENV.PORT || 3000;
 
