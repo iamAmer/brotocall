@@ -3,10 +3,12 @@ import colors from 'colors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import { ENV } from './config/env.js';
+import cors from 'cors';
 
 import authRoutes from './routes/auth.route.js';
 import messageRouters from './routes/message.route.js';
 import { connectDB } from './config/db.js';
+import { env } from 'process';
 
 const PORT = ENV.PORT || 3000;
 
@@ -14,6 +16,7 @@ const app = express();
 const __dirname = path.resolve();
 
 app.use(express.json());
+app.use(cors({origin: ENV.clientURL, credentials: true}));
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
