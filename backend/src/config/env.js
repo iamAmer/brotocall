@@ -9,7 +9,7 @@ export const ENV = {
   RESEND_API_KEY: process.env.RESEND_API_KEY,
   EMAIL_FROM: process.env.EMAIL_FROM,
   EMAIL_FROM_NAME: process.env.EMAIL_FROM_NAME,
-  clientURL: process.env.clientURL,
+  CLIENT_URL: process.env.CLIENT_URL,
   CLOUDINARY_CLOUD_NAME: process.env.CLOUDINARY_CLOUD_NAME,
   CLOUDINARY_API: process.env.CLOUDINARY_API,
   CLOUDINARY_API_SECRET: process.env.CLOUDINARY_API_SECRET,
