@@ -33,12 +33,12 @@ function ChatsList() {
               <div className="size-12 rounded-full">
                 <img
                   src={chat.profilePic || "/avatar.png"}
-                  alt={chat.fullName}
+                  alt={chat.userName}
                 />
               </div>
             </div>
             <h4 className="text-slate-200 font-medium truncate">
-              {chat.fullName}
+              {chat.userName}
             </h4>
           </div>
         </div>

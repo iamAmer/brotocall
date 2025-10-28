@@ -29,14 +29,14 @@ function ChatHeader() {
           <div className="w-12 rounded-full">
             <img
               src={selectedUser.profilePic || "/avatar.png"}
-              alt={selectedUser.fullName}
+              alt={selectedUser.userName}
             />
           </div>
         </div>
 
         <div>
           <h3 className="text-slate-200 font-medium">
-            {selectedUser.fullName}
+            {selectedUser.userName}
           </h3>
           <p className="text-slate-400 text-sm">
             {isOnline ? "Online" : "Offline"}
