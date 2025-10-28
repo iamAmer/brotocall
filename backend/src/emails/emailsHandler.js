@@ -2,7 +2,7 @@ import { resendClient, sender } from '../config/resend.js';
 import { createWelcomeEmailTemplate } from '../emails/emailTemplates.js';
 import colors from 'colors';
 
-export const sendWelcomeEmail = async (email, name, clientURL) => {
+export const sendWelcomeEmail = async (email, name, CLIENT_URL) => {
   if (!email || typeof email !== 'string' || !email.includes('@')) {
     throw new Error('Invalid email address provided');
   }
@@ -11,7 +11,7 @@ export const sendWelcomeEmail = async (email, name, clientURL) => {
     from: `${sender.name} <${sender.email}>`,
     to: email,
     subject: `Welcome to Brotocall!`,
-    html: createWelcomeEmailTemplate(name, clientURL),
+    html: createWelcomeEmailTemplate(name, CLIENT_URL),
   });
 
   if (error) {

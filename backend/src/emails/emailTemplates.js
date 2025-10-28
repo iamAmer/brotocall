@@ -9,23 +9,23 @@ function escapeHtml(text) {
     .replace(/'/g, '&#039;');
 }
 
-export function createWelcomeEmailTemplate(name, clientURL) {
+export function createWelcomeEmailTemplate(name, CLIENT_URL) {
   // Validate inputs
   if (!name || typeof name !== 'string') {
     throw new Error('name must be a non-empty string');
   }
-  if (!clientURL || typeof clientURL !== 'string') {
-    throw new Error('clientURL must be a non-empty string');
+  if (!CLIENT_URL || typeof CLIENT_URL !== 'string') {
+    throw new Error('CLIENT_URL must be a non-empty string');
   }
 
   // Validate URL format and protocol
   try {
-    const url = new URL(clientURL);
+    const url = new URL(CLIENT_URL);
     if (!['http:', 'https:'].includes(url.protocol)) {
-      throw new Error('clientURL must use http or https protocol');
+      throw new Error('CLIENT_URL must use http or https protocol');
     }
   } catch (error) {
-    throw new Error(`Invalid clientURL: ${error.message}`);
+    throw new Error(`Invalid CLIENT_URL: ${error.message}`);
   }
 
   return `
@@ -61,7 +61,7 @@ export function createWelcomeEmailTemplate(name, clientURL) {
       
       <!-- Button -->
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${clientURL}" style="background: linear-gradient(135deg, #6d4ab7, #4b2c82); color: #fff; text-decoration: none; padding: 12px 30px; border-radius: 40px; font-weight: 500; display: inline-block; box-shadow: 0 4px 12px rgba(109,74,183,0.4);">
+        <a href="${CLIENT_URL}" style="background: linear-gradient(135deg, #6d4ab7, #4b2c82); color: #fff; text-decoration: none; padding: 12px 30px; border-radius: 40px; font-weight: 500; display: inline-block; box-shadow: 0 4px 12px rgba(109,74,183,0.4);">
           Open BroToCall
         </a>
       </div>

@@ -63,7 +63,7 @@ export const signup = async (req, res) => {
 
       // TODO: send welcome email to user
       try {
-        await sendWelcomeEmail(newUser.email, newUser.userName, ENV.clientURL);
+        await sendWelcomeEmail(newUser.email, newUser.userName, ENV.CLIENT_URL);
       } catch (error) {
         console.error('Failed to send welcome email!', error);
       }
