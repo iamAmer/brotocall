@@ -23,6 +23,7 @@ function ChatContainer() {
   };
 
   useEffect(() => {
+    if (!selectedUser) return;
     getMessagesByUserId(selectedUser._id);
     subscribeToMessages();
 
