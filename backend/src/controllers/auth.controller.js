@@ -61,7 +61,6 @@ export const signup = async (req, res) => {
         profilePic: newUser.profilePic,
       });
 
-      // TODO: send welcome email to user
       try {
         await sendWelcomeEmail(newUser.email, newUser.userName, ENV.CLIENT_URL);
       } catch (error) {

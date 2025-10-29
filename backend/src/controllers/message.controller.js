@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import cloudinary from '../config/cloudinary.js';
 import Message from '../models/Message.js';
 import User from '../models/user.js';
+import { getReceiverSocketId, io } from '../config/socket.js';
 
 export const getAllContacts = async (req, res) => {
   try {
@@ -75,7 +76,14 @@ export const sendMessage = async (req, res) => {
 
     await newMessage.save();
 
-    // TODO: send message in real-time
+    const receiverSocketId = getReceiverSocketId(receiverId);
+    if (receiverSocketId) {
+      const payload = newMessage.toObject({ getters: true, virtuals: false });
+      payload.senderId = String(payload.senderId);
+      payload.receiverId = String(payload.receiverId);
+      io.to(receiverSocketId).emit('newMessage', payload);
+    }
+
     res.status(200).json(newMessage);
   } catch (error) {
     console.log(`Error in sendMessage: ${error}`);
