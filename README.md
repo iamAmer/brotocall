@@ -189,23 +189,15 @@ ARCJET_ENV=development
 ## Deployment
 
 brotocall is automatically deployed to **Sevalla** through **GitHub Actions** on each commit.  
-You can manually trigger deployment by pushing to the main branch:
+
+- Live Demo: [brotocall](https://brotocall-kq897.sevalla.app/)   
+- You can manually trigger deployment by pushing to the main branch:
 
 ```bash
 git add .
 git commit -m "deploy: update feature"
 git push origin main
 ```
-
----
-
-## 🧭 Future Improvements
-
-- [ ] Improve frontend UI with message reactions  
-- [ ] Add typing indicators and message read receipts  
-- [ ] Integrate notifications system  
-- [ ] Enhance rate limiting and caching  
-
 ---
 
 ## 📄 License
