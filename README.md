@@ -49,7 +49,7 @@ It’s equipped with **Arcjet rate limiting and middleware** to ensure performan
 ## Tech Stack
 
 **Frontend:**  
-- React (or another JS framework, depending on setup)
+- React.js
 
 **Backend:**  
 - Node.js  
@@ -67,7 +67,7 @@ It’s equipped with **Arcjet rate limiting and middleware** to ensure performan
 ## Architecture
 
 Here’s the high-level architecture of brotocall:
-![Architecture Diagram](BrotoCall0(1).png)
+![alt text](brotocall.png)
 
 ### Key Components
 
