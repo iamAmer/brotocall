@@ -200,12 +200,12 @@ git push origin main
 ```
 ---
 
-## 📄 License
+## License
 
 This project is licensed under the **MIT License** — free for personal and commercial use.
 
 ---
 
-### 🧑‍💻 Author
+### Author
 
-Developed with ❤️ by [**@iamAmer**](https://github.com/iamAmer)
+Developed by [**@iamAmer**](https://github.com/iamAmer)
