@@ -22,13 +22,16 @@ export const useChatStore = create((set, get) => ({
 
   setSelectedUser: (selectedUser) => set({ selectedUser }),
 
-  getAllContacts: async () => {
+  getAllContacts: async (query = "") => {
     set({ isUsersLoading: true });
     try {
-      const res = await axiosInstance.get("/messages/contacts");
+      const url = query ? `/messages/contacts?q=${encodeURIComponent(query)}` : "/messages/contacts";
+      const res = await axiosInstance.get(url);
       set({ allContacts: res.data });
     } catch (error) {
-      toast.error(error.response.data.message);
+      // defensive access of message
+      const msg = error?.response?.data?.message || "Something went wrong";
+      toast.error(msg);
     } finally {
       set({ isUsersLoading: false });
     }
