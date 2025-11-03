@@ -7,9 +7,27 @@ import { getReceiverSocketId, io } from '../config/socket.js';
 export const getAllContacts = async (req, res) => {
   try {
     const loggedInUser = req.user._id;
-    const filteredUsers = await User.find({
-      _id: { $ne: loggedInUser },
-    }).select('-password');
+    const q = typeof req.query.q === 'string' ? req.query.q.trim() : '';
+
+    // base filter excludes current user
+    const baseFilter = { _id: { $ne: loggedInUser } };
+
+    let filteredUsers;
+    if (q && q.length > 0) {
+      // search by username or email (case-insensitive, partial)
+      const searchFilter = {
+        $or: [
+          { userName: { $regex: q, $options: 'i' } },
+          { email: { $regex: q, $options: 'i' } },
+        ],
+      };
+
+      filteredUsers = await User.find({ ...baseFilter, ...searchFilter })
+        .select('-password')
+        .limit(50);
+    } else {
+      filteredUsers = await User.find(baseFilter).select('-password').limit(50);
+    }
 
     res.status(200).json(filteredUsers);
   } catch (error) {
